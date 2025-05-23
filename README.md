@@ -129,4 +129,8 @@ Cancelación y edición de usuario
 * **Andres felipe montes ortiz** - 
 * **@andreec2** - 
 
+## Licencia
+
+Este proyecto fue desarrollado con fines académicos/técnicos como parte de una prueba. El uso es libre y educativo.
+
 
