@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Inicio - Vuelos Disponibles</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f7fa;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        select, input[type="number"] {
+            padding: 0.3rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 0.5rem;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .mensaje {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: green;
+            font-weight: bold;
+        }
+
+        .actions {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .actions a {
+            display: inline-block;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .actions a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Vuelos Disponibles</h1>
+
+<!-- Mensaje de confirmación -->
+<div th:if="${mensaje}" class="mensaje">
+    <p th:text="${mensaje}"></p>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Código</th>
+        <th>Origen</th>
+        <th>Destino</th>
+        <th>Salida</th>
+        <th>Llegada</th>
+        <th>Tarifa</th>
+        <th>Reservar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vuelo : ${vuelos}">
+        <td th:text="${vuelo.codigoVuelo}"></td>
+        <td th:text="${vuelo.origen}"></td>
+        <td th:text="${vuelo.destino}"></td>
+        <td th:text="${vuelo.fechaHoraSalida}"></td>
+        <td th:text="${vuelo.fechaHoraLlegada}"></td>
+        <td th:text="${vuelo.tarifa}"></td>
+        <td>
+            <form th:action="@{/reservar}" method="post">
+                <input type="hidden" name="vueloId" th:value="${vuelo.id}" />
+                <label style="font-size: 0.85rem;">Categoría:</label>
+                <select name="categoriaAsiento" required>
+                    <option value="ECONOMICA">Económica</option>
+                    <option value="BUSINESS">Business</option>
+                </select>
+                <label style="font-size: 0.85rem;">Pasajeros:</label>
+                <input type="number" name="cantidadPasajeros" min="1" value="1" required />
+                <button type="submit">Reservar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="actions">
+    <a href="/mis-reservas">Ver Mis Reservas</a>
+    <a href="/logout" style="background-color: #dc3545;">Cerrar sesión</a>
+</div>
+
+</body>
+</html>
